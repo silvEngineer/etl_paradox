@@ -1,0 +1,106 @@
+[
+    {
+        "tabela": "cadcli",
+        "query": "SELECT Cod AS cod_cliente, Nome AS nome_cliente, a.\"Nome Fantasia\" AS nome_fantasia, a.Cidade AS cidade, a.UF AS uf, a.\"Segmento Mercado\" AS segmento_mercado, a.\"Tp Pessoa\" AS tipo_pessoa, a.\"Tp Cliente\" AS tipo_cliente, a.Representante AS representante FROM cadcli a"
+    },
+    {
+        "tabela": "caditem",
+        "query": "SELECT i.Cod AS cod_item, i.\"Desc Int\" AS descricao, i.\"Sub-Família\" AS sub_familia, i.\"Tipo Item\" AS tipo_item, i.\"Situação\" AS situacao, i.\"UM Armazenamento\" as um_armazenamento, i.\"UM Venda\" as um_venda, i.\"UM Compra\" as um_compra, i.\"Ax Padrão\" as ax_padrao, i.\"Custo 1\" as custo_item, i.\"Custo 3\" as custo_roteiro FROM caditem i"
+    },
+    {
+        "tabela": "cadgrupo",
+        "query": "SELECT g.Cod AS cod_grupo, g.\"Descrição\" AS descricao FROM cadgrupo g"
+    },
+    {
+        "tabela": "cadfam",
+        "query": "SELECT f.Cod AS cod_familia, f.\"Descrição\" AS descricao, f.\"Grupo\" AS cod_grupo FROM cadfam f"
+    },
+    {
+        "tabela": "cadsfam",
+        "query": "SELECT sf.Cod AS cod_sub_familia, sf.\"Descrição\" AS descricao, sf.\"Familia\" AS cod_familia FROM cadsfam sf"
+    },
+    {
+        "tabela": "cadrep",
+        "query": "SELECT r.Cod AS cod_representante, r.\"Descrição\" AS nome_representante, r.Cidade AS cidade, r.Ativo AS ativo FROM cadrep r"
+    },
+    {
+        "tabela": "cadcid",
+        "query": "SELECT c.Cod AS cod_cidade, c.\"Descrição\" AS cidade, c.UF AS uf FROM cadcid c"
+    },
+    {
+        "tabela": "caduf",
+        "query": "SELECT u.Cod AS cod_uf, u.\"Descrição\" AS uf FROM caduf u where u.Cod is not null"
+    },
+    {
+        "tabela": "cadmetas",
+        "query": "SELECT m.Rep AS cod_representante, m.Mes AS mes, m.Ano AS ano, m.valor AS valor FROM cadmetas m"
+    },
+    {
+        "tabela": "cadcpgto",
+        "query": "SELECT pg.Cod AS cod_cond_pgto, pg.\"Descrição\" AS descricao FROM cadcpgto pg"
+    },
+    {
+        "tabela": "cadpedido",
+        "query": "SELECT it.\"Nr Ped\" AS nro_pedido, it.Cod AS cod_item, it.Qtde AS qtd_vendida, it.\"Qtde Atendida\" AS qtd_atendida, it.\"Preço Unitário\" AS preco_unitario, (it.Qtde * it.\"Preço Unitário\") AS valor_vendido, (it.\"Qtde Atendida\" * it.\"Preço Unitário\") AS valor_atendido, it.\"Dt Entrega\" AS dt_entrega, ped.\"Dt Emissão\" AS dt_emissao, ped.Cliente AS cod_cliente, ped.Cidade AS cod_cidade, ped.Representante AS cod_representante, ped.\"Comissão\" AS cod_comissao, ped.\"Tipo NFS\" AS cfop, ped.\"Condição Pgto\" AS cod_cond_pgto FROM caditped it LEFT JOIN cadpedv ped ON it.\"Nr Ped\" = ped.\"Nr Ped\""
+    },
+    {
+        "tabela": "cadnota",
+        "query": "SELECT it.\"Nr Nota\" AS nro_nota, it.Cod AS cod_item, it.Qtde AS qtd_vendida, it.\"Preço Unitário\" AS preco_unitario, (it.Qtde * it.\"Preço Unitário\") AS valor_vendido, nf.\"Dt Emissão\" AS dt_emissao, nf.Cliente AS cod_cliente, nf.Cidade AS cod_cidade, nf.Representante AS cod_representante, (nf.\"Comissão\"/100) AS perc_comissao, ((it.Qtde * it.\"Preço Unitário\")*(nf.\"Comissão\"/100)) AS valor_comissao, trim(nf.\"Tipo NFS\") AS cfop, nf.\"Condição Pgto\" AS cod_cond_pgto, nf.\"StatusNFE\" AS status_nfe FROM caditnfs it LEFT JOIN cadnfs nf ON it.\"Nr Nota\" = nf.\"Nr Nota\""
+    },
+    {
+        "tabela": "cadtpnfs",
+        "query": "SELECT DISTINCT tp.\"Cod\" as codigo, tp.\"Nat Operação\" AS cfop, tp.\"Gera CR\" AS gera_cr FROM cadtpnfs tp"
+    },
+    {
+        "tabela": "cadseg",
+        "query": "select s.Cod as cod_segmento, s.\"Descrição\" as segmento from cadseg s"
+    },
+    {
+        "tabela": "cadordem",
+        "query": "select o.\"Nro\" as nro_ordem, o.\"Cod\" as cod_item, o.\"Tipo\" as tipo_ordem, o.\"Qtde\" as qtd_producao, o.\"Qtde Bx\" as qtd_bx, o.\"Posição\" as posicao, o.\"Dt Início\" as dt_inicio, o.\"Dt Fim\" as dt_fim, o.\"dt_lib\" as dt_liberacao, o.\"dt_bx\" as dt_bx, o.\"qtde_rejeitada\" from cadordem o"
+    },
+    {
+        "tabela": "cadapontamento",
+        "query": "select ap.\"Ordem\" as nro_ordem, ap.\"Seq\" as sequencial, ap.\"Cod\" as cod_item, ap.\"Operacao\" as operacao, ap.\"Data\" as dt_apontamento, ap.\"Data_Previsao\" as dt_previsao, ap.\"Ax\" as cod_almox, ap.\"Qtde\" as qtde_consumida from cadapontamento ap"
+    },
+    {
+        "tabela": "cadax",
+        "query": "select ax.\"Cod\" as cod_almox, ax.\"Descrição\" as almoxarifado, ax.\"Localização\" as localizacao, ax.\"Fornecedor\" as cod_fornecedor, ax.\"Cliente\" as cod_cliente, ax.\"Situacao\" as situacao from cadax ax"
+    },
+    {
+        "tabela": "notacomissao",
+        "query": "select nf.\"Nr Nota\" as nro_nota, nf.\"Dt Emissão\" as dt_emissao, nf.\"Total Itens\" as valor_itens, nf.\"Desconto\" as desconto, nf.\"Cliente\" as cod_cliente, nf.\"Representante\" as cod_rep, nf.\"Comissão\" as perc_comissao, nf.\"Total Nota\" as valor_nota, nf.\"StatusNFE\" as status_nota, nf.\"Tipo NFS\" as cfop, nf.\"Vr Frete\" as valor_frete from cadnfs nf"
+    },
+    {
+        "tabela": "cadcr",
+        "query": "select r.\"Titulo\" as nro_titulo, r.\"Parcela\" as parcela, r.\"Cliente\" as cod_cliente, r.\"Tp Mvto\" as tipo_movimento, r.\"Dt Emissão\" as dt_emissao, r.\"Nr NFS\" as nro_nf, r.\"Dt Vcto\" as dt_vencto, r.\"Portador\" as cod_portador, r.\"Tp Cobrança\" as tipo_cobranca, r.\"Vr Título\" as vlr_titulo, r.\"Vr Pago\" as vlr_pago, r.\"Vr Desconto\" as vlr_descto, r.\"Vr Juro\" as vlr_juro, r.\"Dt Movimento\" as dt_movto from cadcr r"
+    },
+    {
+        "tabela": "cadcp",
+        "query": "select p.\"Titulo\" as nro_titulo, p.\"Parcela\" as parcela, p.\"Tp Mvto\" as tipo_movimento, p.\"Fornecedor\" as cod_fornecedor, p.\"Dt Emissão\" as dt_emissao, p.\"Dt Vcto\" as dt_vencto, p.\"Portador\" as cod_portador, p.\"Dt Movimento\" as dt_movto, p.\"Vr Título\" as vlr_titulo, p.\"Vr Pago\" as vlr_pago, p.\"Vr Desconto\" as vlr_descto, p.\"Vr Juro\" as vlr_juro from cadcp p"
+    },
+    {
+        "tabela": "cadbolcx",
+        "query": "select cb.\"Data\" as dt_movto, cb.port as cod_portador, cb.\"Historico\" as historico, cb.\"Flag\" as tipo_movto, cb.\"Valor\" as vlr_movto from cadbolcx cb"
+    },
+    {
+        "tabela": "cadport2",
+        "query": "select p.\"Cod\" as cod_portador, p.\"Descrição\" as nome_portador from cadport2 p"
+    },
+    {
+        "tabela": "cadop",
+        "query": "select op.\"Cod\" as cod_ope, op.\"Desc\" as desc_ope, op.\"Setor\" as setor, op.\"Origem\" as origem from cadop op"
+    },
+    {
+        "tabela": "cadrot",
+        "query": "select r.\"Item\" as cod_item, r.\"Seq\" as sequencial, r.\"Op\" as cod_ope, r.\"Tempo\" as tempo, r.\"Rec_perda\" as rec_perda, r.\"Tpo_corr\" as tpo_corr, r.\"Tpo_prep\" as tpo_prep, r.\"Lote_ideal\" as lote_ideal, r.\"Desc_op\" as desc_ope, r.\"Qtde_fun_prep\" as qtde_fun_prep, r.\"Qtde_fun_ope\" as qtde_fun_ope, r.\"Total_prep\" as total_prep, r.\"Total_hr_homem\" as total_hr_homem, r.\"Total_hr_maq\" as total_hr_maq, r.\"Total_ope\" as total_ope, r.\"maq\", r.\"fer\", r.\"VTot_Prep\" as vtot_prep, r.\"VTot_Oper\" as vtot_oper, r.\"VTot_HrHomem\" as vtot_hrhomem, r.\"VTot_HrMaquina\" as vtot_hrmaquina, r.\"VTot_Rot\" as vtot_rot, r.\"programa\" from cadrot r"
+    },
+    {
+        "tabela": "cadcusto",
+        "query": "select cus.\"Cod\" as cod_item, cus.\"Preco_Base\" as preco_base, cus.\"Preco_Final\" as preco_final from cadcusto cus"
+    },
+    {
+        "tabela": "cadestr",
+        "query": "select est.\"Cod Pai\" as cod_item_pai, est.\"Cod Filho\" as cod_item_filho, est.\"Operacao\" as operacao, est.\"Qtde\" as qtd_consumo, est.ordem, est.\"Perda\" as perda from cadestr est"
+    }
+]
